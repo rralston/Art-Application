@@ -1,0 +1,21 @@
+<h1>Current Exhibitions</h1>
+<%= link_to 'Add', new_event_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+</div>
+<div data-role="content"><div class="content-primary">
+	<% @events_day.sort.each do |day, events| %>
+
+	<ul data-role="listview" data-theme="d" data-divider-theme="d">
+	<li data-role="list-divider"><%= day.strftime('%A %d %B') %><span class="ui-li-count"><%= @events_day.each.count %>
+	
+	</span></li>
+<% for event in events %>
+	<li><a href="events/<%= event.id %>" rel="external">
+		<h3><%= event.company.name %> </h3>
+		<p><%= event.name %> by <%= event.artist %></p>
+	<p class="ui-li-aside"><strong><%= event.starttime.to_time.to_s(:time) %> </strong></p>
+	</a>	
+		</li>
+		<% end %><p>
+	</ul>
+	<% end %>
+	</div></div>

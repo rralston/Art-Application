@@ -1,0 +1,20 @@
+<h1>Galleries Near Me</h1>
+<%= link_to 'Add', new_company_path, "data-icon" => "plus", "class" => "ui-btn-right" %></div>
+
+<div data-role="content"><div class="content-primary">	
+ <ul data-role="listview">
+<% @companies.each do |company| %>
+<%= @lat_lng %>
+		<li>
+		<a href="companies/<%= company.id %>">
+		<img src="<%= company.image(:small) %>" height="115" />
+	<h3><%= company.name %> </h3>
+	<p><%= company.description %></p>
+	</a>
+		</li>
+	
+		<% end %>	</ul>
+		</div></div>
+		
+		
+	

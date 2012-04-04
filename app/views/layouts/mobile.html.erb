@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Art Near Me</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="stylesheet" href="http://iris-exchequer.com/henruzzy/jQueryMob.css" />
+<%= stylesheet_link_tag    "photoswipe" %>
+<%= stylesheet_link_tag  "mobile" %>
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "klass.min" %>
+<%= javascript_include_tag "code.photoswipe.jquery-3.0.4" %>
+<%= javascript_include_tag "geo" %>
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+<%= javascript_include_tag('orientation') %>
+<script type="text/javascript">
+
+	(function(window, PhotoSwipe){
+	
+		document.addEventListener('DOMContentLoaded', function(){
+		
+			var
+				options = {},
+				instance = PhotoSwipe.attach( window.document.querySelectorAll('#Gallery a'), options );
+		
+		}, false);
+		
+		
+	}(window, window.Code.PhotoSwipe));
+	
+</script>
+<script type="text/javascript">
+$(function() {
+
+    $("h2")
+        .wrapInner("<span>")
+
+    $("h2 br")
+        .before("<span class='spacer'>")
+        .after("<span class='spacer'>");
+
+});
+</script>
+
+<script>
+		if(geo_position_js.init()){
+			geo_position_js.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
+		}
+		else{
+			alert("Functionality not available");
+		}
+
+		function success_callback(p)
+		{
+			alert('lat='+p.coords.latitude.toFixed(2)+';lon='+p.coords.longitude.toFixed(2));
+		}
+		
+		function error_callback(p)
+		{
+			alert('error='+p.code);
+		}		
+	</script>
+
+<%= yield :head %> 
+</head>
+<body>
+
+  <div data-role="page">
+<div data-role="header" data-theme="b" >
+<%= yield %>
+<div data-role="footer" data-theme="b">
+<div data-role="navbar" data-iconpos="bottom">
+				<ul>
+				<li><%= link_to 'Exhibitions', events_path, "data-icon" => "grid" %>
+				</li>
+				<li><%= link_to 'Galleries', companies_path, "data-icon" => "star" %>
+				</li>
+				<li><%= link_to 'More Info', new_company_path, "data-icon" => "info" %>
+				</li>
+			</ul>
+		</div>
+</div>
+</body>
+<%= yield :scripts %>
+</html>
+

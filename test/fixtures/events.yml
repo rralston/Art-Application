@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  description: MyText
+  artist: MyString
+  starttime: 2012-03-23 00:19:33
+  startdate: 2012-03-23
+  finishdate: 2012-03-23
+
+two:
+  name: MyString
+  description: MyText
+  artist: MyString
+  starttime: 2012-03-23 00:19:33
+  startdate: 2012-03-23
+  finishdate: 2012-03-23

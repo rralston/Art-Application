@@ -1,0 +1,84 @@
+<h1><%= @company.name %></h1>
+<%= link_to 'Back', companies_path, "data-icon" => "arrow-l" %></div>
+<div class="ui-body ui-body-e">
+<p id="notice"><%= notice %></p>
+<% if @company.image.exists? then %>
+<div class="image">
+<h2><span><%= @company.name %><span class='spacer'></span></span></h2>
+<%= image_tag @company.image.url(:large) %>
+</div>
+<% else %>
+<p> There are no photo's attached</p>
+<% end %>
+<p>
+  <%= @company.description %>
+</p>
+<h3>Current Exhibition</h3>
+<% if @company.events.exists? then %>
+<% @company.events.first(1).each do |event| %>
+<%= link_to "#{event.name}", {:controller => "events", :action => "show", :id => event.id}, :rel => "external" %>
+By <b><%= event.artist %></b><br />
+<%= event.description %><br />
+
+Finished On: <%= event.finishdate.strftime("%B #{event.finishdate.day.ordinalize}, %Y") %>
+
+<% end %>
+<% else %>
+<p> There are no current events attached</p>
+<% end %>
+
+<br /><br />
+<ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="b" data-count-theme="e">
+<li data-role="list-divider">Previous Exhibitions</li>
+	<% if @company.events.exists? then %>
+	<% @company.events.offset(1).each do |event| %>
+<li><h3><%= link_to "#{event.name}", {:controller => "events", :action => "show", :id => event.id}, :rel => "external" %></h3>
+	<p>By <%= event.artist %></p></li>
+	
+<% end %>
+<% else %>
+<li>
+<p> There are no previous events attached</p></li>
+<% end %>
+</ul>
+<p>
+<ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="b" data-count-theme="e">
+<li data-role="list-divider">Contact <%= @company.name %></li>
+<li><%= link_to "Website", @company.website %>
+<span class="ui-li-count">Go</span></li>
+
+<li><%= mail_to(@company.email, "Email", :subject => @company.name ) %>
+<span class="ui-li-count">Open</span></li>	
+
+<li> <%= phone_number_link ("#{@company.phone}") %>
+	<span class="ui-li-count">Call</span></li>
+<li> <%= link_to @company.address,  "http://maps.google.com?q=#{@company.latitude}%2C#{@company.longitude}" %>
+	<span class="ui-li-count">Map</span></li>
+
+</ul>
+
+	<h3>Map:</h3>
+	<% "http://maps.google.com?q=#{@company.latitude}%2C#{@company.longitude}" %> 
+	<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@company.latitude}%2C#{@company.longitude}" %>
+<br /><br />
+<div data-role="collapsible" data-collapsed="true" data-content-theme="b" data-theme="d"> 
+<h3>Nearby Galleries</h3>
+<% for company in @company.nearbys(10, :units => :km) %>
+<li><%= link_to company.name, company %> at <%=  company.address %> (<%= company.distance.round(2) %> km)
+	</li>
+</p>
+
+<% end %>
+
+</div><!-- /collapsible -->
+<p>
+<%= link_to("New Event", {:controller => 'events', :action => 'new', :company_id => @company.id}) %>
+</p>
+
+
+
+<br />
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>
+</div>
+
