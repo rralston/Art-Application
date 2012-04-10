@@ -2,24 +2,29 @@ class CompaniesController < ApplicationController
   # GET /companies
   # GET /companies.json
   layout "mobile"
-  
-  def action
-    @lat_lng = cookies[:lat_lng].split("|")
-  end
-  
+   
   def index
     @companies = Company.all
-
-    respond_to do |format|
+    @lat_lng = cookies[:lat_lng].to_s().tr("|", ",")
+      @long = request.location.longitude
+      @lat = request.location.longitude
+      @city = request.location.city
+      
+      respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @companies }
-    end
   end
+end
 
   # GET /companies/1
   # GET /companies/1.json
   def show
+    # returns Geocoder::Result object
     @company = Company.find(params[:id])
+    @long = request.location.longitude
+    @lat = request.location.latitude
+    @ip = request.ip
+    @city = request.location.city
    # @current = Event.where(:company_id => [params[:id]], :limit => 1)
    @event = Event.where(:company_id => (params[:id]), :limit => 1)
     @json = Company.find(params[:id]).to_gmaps4rails

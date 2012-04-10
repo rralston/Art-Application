@@ -121,7 +121,6 @@ DEPENDENCIES
   gmaps4rails
   jquery-mobile-rails
   jquery-rails
-  json
   paperclip
   rails (= 3.2.1)
   sass-rails (~> 3.2.3)

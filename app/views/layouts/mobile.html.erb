@@ -9,7 +9,8 @@
 <%= javascript_include_tag "application" %>
 <%= javascript_include_tag "klass.min" %>
 <%= javascript_include_tag "code.photoswipe.jquery-3.0.4" %>
-<%= javascript_include_tag "geo" %>
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
 <%= javascript_include_tag('orientation') %>
@@ -42,24 +43,7 @@ $(function() {
 });
 </script>
 
-<script>
-		if(geo_position_js.init()){
-			geo_position_js.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
-		}
-		else{
-			alert("Functionality not available");
-		}
 
-		function success_callback(p)
-		{
-			alert('lat='+p.coords.latitude.toFixed(2)+';lon='+p.coords.longitude.toFixed(2));
-		}
-		
-		function error_callback(p)
-		{
-			alert('error='+p.code);
-		}		
-	</script>
 
 <%= yield :head %> 
 </head>

@@ -1,3 +1,4 @@
+ 
 <h1><%= @company.name %></h1>
 <%= link_to 'Back', companies_path, "data-icon" => "arrow-l" %></div>
 <div class="ui-body ui-body-e">
@@ -28,6 +29,79 @@ Finished On: <%= event.finishdate.strftime("%B #{event.finishdate.day.ordinalize
 <% end %>
 
 <br /><br />
+IP: <%= @ip %> City: <%= @city %>
+
+
+<meta name="viewport" content="width=620" />
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <article>
+      <p>Finding your location: <span id="status">checking...</span></p>
+    </article>
+<script>
+function success(position) {
+  var s = document.querySelector('#status');
+  
+  if (s.className == 'success') {
+    // not sure why we're hitting this twice in FF, I think it's to do with a cached result coming back    
+    return;
+  }
+  
+  s.innerHTML = "found you! "+position.coords.accuracy+" "+position.coords.latitude+" "+position.coords.longitude+" ";
+s.className = 'success';
+  
+  var mapcanvas = document.createElement('div');
+  mapcanvas.id = 'mapcanvas';
+  mapcanvas.style.height = '400px';
+  mapcanvas.style.width = '560px';
+    
+  document.querySelector('article').appendChild(mapcanvas);
+  
+  var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  var myOptions = {
+    zoom: 15,
+    center: latlng,
+    mapTypeControl: false,
+    navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
+  
+  var marker = new google.maps.Marker({
+      position: latlng, 
+      map: map, 
+      title:"You are here! (at least within a "+position.coords.accuracy+" meter radius)"
+  });
+}
+function getGeoLocation() {
+  navigator.geolocation.getCurrentPosition(setGeoCookie);
+}
+	function setGeoCookie(position) {
+	  var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
+	  document.cookie = "lat_lng=" + escape(cookie_val);
+	}
+function error(msg) {
+  var s = document.querySelector('#status');
+  s.innerHTML = typeof msg == 'string' ? msg : "failed";
+  s.className = 'fail';
+  
+  // console.log(arguments);
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(success, error);
+} else {
+  error('not supported');
+}
+
+</script>
+
+
+Hello
+<br><br>
+
+<%= @long %>
+<br><br>
 <ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="b" data-count-theme="e">
 <li data-role="list-divider">Previous Exhibitions</li>
 	<% if @company.events.exists? then %>
@@ -38,7 +112,7 @@ Finished On: <%= event.finishdate.strftime("%B #{event.finishdate.day.ordinalize
 <% end %>
 <% else %>
 <li>
-<p> There are no previous events attached</p></li>
+ There are no previous events attached</li>
 <% end %>
 </ul>
 <p>
@@ -52,9 +126,8 @@ Finished On: <%= event.finishdate.strftime("%B #{event.finishdate.day.ordinalize
 
 <li> <%= phone_number_link ("#{@company.phone}") %>
 	<span class="ui-li-count">Call</span></li>
-<li> <%= link_to @company.address,  "http://maps.google.com?q=#{@company.latitude}%2C#{@company.longitude}" %>
+<li> <%= link_to @company.address,  "http://maps.google.com?q=#{@company.latitude},+#{@company.longitude}+(#{@company.name})&iwloc=A&hl=en" %>
 	<span class="ui-li-count">Map</span></li>
-
 </ul>
 
 	<h3>Map:</h3>
@@ -69,6 +142,12 @@ Finished On: <%= event.finishdate.strftime("%B #{event.finishdate.day.ordinalize
 </p>
 
 <% end %>
+
+</div><!-- /collapsible -->
+<div data-role="collapsible" data-collapsed="true" data-content-theme="b" data-theme="d"> 
+<h3>Distance From Me</h3>
+<li><%= Geocoder::Calculations.distance_between([@long,@lat], [@company.longitude,@company.latitude]) %></li>
+<li><%= @long %><%= @lat %></p>
 
 </div><!-- /collapsible -->
 <p>
