@@ -1,6 +1,10 @@
 
-<h1>Galleries Near <%= @city %></h1>
-<%= link_to 'Add', new_company_path, "data-icon" => "plus", "class" => "ui-btn-right" %></div>
+<h1>Galleries Near Me <%= @city %></h1>
+<%= link_to '', new_company_path, "data-icon" => "plus", "data-iconpos" => "notext" , "class" => "ui-btn-left", "data-theme" => "a" %>
+<%= link_to '', '#', "data-icon" => "custom", "data-iconpos" => "notext" , "class" => "ui-btn-right", "id" => "find" %>
+
+
+</div>
 
 <div data-role="content"><div class="content-primary">	
  <ul data-role="listview" data-count-theme="b">
@@ -10,8 +14,7 @@
 		<img src="<%= company.image(:small) %>" height="115" />
 	<h3><%= company.name %> </h3>
 	<p><%= company.description %></p>
-	<span class="ui-li-count"> 
-<%= Geocoder::Calculations.distance_between([@long,@lat], [company.longitude,company.latitude]).round %> Km	</span>
+<span class="ui-li-count">Km	</span>
 	</a>
 		</li>
 	

@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   layout "mobile"
   
   def index
-    @events = Event.all
+    @events = Event.where('startdate >= ?', Date.today)
     @events_day = @events.group_by { |s| s.startdate.beginning_of_day }
     
     respond_to do |format|
@@ -21,7 +21,13 @@ class EventsController < ApplicationController
       format.json { render :json => @event }
     end
   end
-
+  def list
+    @events = Event.where('finishdate >= ?', Date.today)
+        respond_to do |format|
+      format.html # show.html.erb
+      format.json { render :json => @event }
+    end
+  end
   # GET /events/new
   # GET /events/new.json
   def new

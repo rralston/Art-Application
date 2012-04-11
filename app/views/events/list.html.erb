@@ -1,0 +1,22 @@
+<h1>All Current Exhibitions</h1>
+</div>
+<div data-role="content"><div class="content-primary">	
+
+	
+
+
+ <ul data-role="listview" data-count-theme="b">
+		<% @events.each do |event| %>
+	<li><a href="events/<%= event.id %>" rel="external">
+		<% for photo in event.photos.limit(1) %>
+		<img src="<%= photo.photo.url(:small) %>" height="115" /><%end%>
+		<h3><%= event.artist %> </h3>
+		<p><%= event.name %> @ <%= event.company.name %></p>
+	
+	</a>	
+		</li>
+
+	
+	<% end %>
+	</ul>
+	</div></div>

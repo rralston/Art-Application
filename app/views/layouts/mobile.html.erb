@@ -3,6 +3,12 @@
 <head>
   <title>Art Near Me</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style"content="black" />
+<link rel="apple-touch-startup-image" href="http://iris-exchequer.com/henruzzy/iPhonePortrait2.png" />
+<link rel="apple-touch-startup-image" href="http://iris-exchequer.com/henruzzy/iPadPortrait.png" />
+
+<link rel="apple-touch-icon" href="http://iris-exchequer.com/henruzzy/ArtNearMeIcon.png" />
 <link rel="stylesheet" href="http://iris-exchequer.com/henruzzy/jQueryMob.css" />
 <%= stylesheet_link_tag    "photoswipe" %>
 <%= stylesheet_link_tag  "mobile" %>
@@ -48,18 +54,24 @@ $(function() {
 <%= yield :head %> 
 </head>
 <body>
-
+	
   <div data-role="page">
 <div data-role="header" data-theme="b" >
 <%= yield %>
-<div data-role="footer" data-theme="b">
-<div data-role="navbar" data-iconpos="bottom">
-				<ul>
-				<li><%= link_to 'Exhibitions', events_path, "data-icon" => "grid" %>
+
+
+
+
+<div data-role="footer" class="nav-glyphish-example" data-theme="b">
+	<div data-role="navbar" class="nav-glyphish-example">
+	<ul>	
+	
+			
+				<li><%= link_to 'Openings', events_path, "data-icon" => "custom", "id" => "opening" %>
 				</li>
-				<li><%= link_to 'Galleries', companies_path, "data-icon" => "star" %>
+				<li><%= link_to 'Galleries', companies_path, "data-icon" => "custom", "id" => "gallery" %>
 				</li>
-				<li><%= link_to 'More Info', new_company_path, "data-icon" => "info" %>
+				<li><%= link_to 'Exhibitions', exhibitions_path, "data-icon" => "custom", "id" => "exhibitions" %>
 				</li>
 			</ul>
 		</div>

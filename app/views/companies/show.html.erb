@@ -1,6 +1,6 @@
  
 <h1><%= @company.name %></h1>
-<%= link_to 'Back', companies_path, "data-icon" => "arrow-l" %></div>
+<%= link_to '', companies_path, "data-iconpos" => "notext", "data-icon" => "arrow-l" %></div>
 <div class="ui-body ui-body-e">
 <p id="notice"><%= notice %></p>
 <% if @company.image.exists? then %>
@@ -16,7 +16,7 @@
 </p>
 <h3>Current Exhibition</h3>
 <% if @company.events.exists? then %>
-<% @company.events.first(1).each do |event| %>
+<% @company.events.last(1).each do |event| %>
 <%= link_to "#{event.name}", {:controller => "events", :action => "show", :id => event.id}, :rel => "external" %>
 By <b><%= event.artist %></b><br />
 <%= event.description %><br />
@@ -29,12 +29,11 @@ Finished On: <%= event.finishdate.strftime("%B #{event.finishdate.day.ordinalize
 <% end %>
 
 <br /><br />
-IP: <%= @ip %> City: <%= @city %>
+IP: <%= @ip %> <br />
+City: <%= @city %> <br />
+Distance (From IP): <%= Geocoder::Calculations.distance_between([@lat,@long],[@company.latitude, @company.longitude]).round %><br />
+<meta name="viewport" />
 
-
-<meta name="viewport" content="width=620" />
-
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <article>
       <p>Finding your location: <span id="status">checking...</span></p>
     </article>
@@ -49,29 +48,6 @@ function success(position) {
   
   s.innerHTML = "found you! "+position.coords.accuracy+" "+position.coords.latitude+" "+position.coords.longitude+" ";
 s.className = 'success';
-  
-  var mapcanvas = document.createElement('div');
-  mapcanvas.id = 'mapcanvas';
-  mapcanvas.style.height = '400px';
-  mapcanvas.style.width = '560px';
-    
-  document.querySelector('article').appendChild(mapcanvas);
-  
-  var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-  var myOptions = {
-    zoom: 15,
-    center: latlng,
-    mapTypeControl: false,
-    navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  var map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
-  
-  var marker = new google.maps.Marker({
-      position: latlng, 
-      map: map, 
-      title:"You are here! (at least within a "+position.coords.accuracy+" meter radius)"
-  });
 }
 function getGeoLocation() {
   navigator.geolocation.getCurrentPosition(setGeoCookie);
@@ -96,16 +72,11 @@ if (navigator.geolocation) {
 
 </script>
 
-
-Hello
-<br><br>
-
-<%= @long %>
 <br><br>
 <ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="b" data-count-theme="e">
 <li data-role="list-divider">Previous Exhibitions</li>
 	<% if @company.events.exists? then %>
-	<% @company.events.offset(1).each do |event| %>
+	<% @company.events.each do |event| %>
 <li><h3><%= link_to "#{event.name}", {:controller => "events", :action => "show", :id => event.id}, :rel => "external" %></h3>
 	<p>By <%= event.artist %></p></li>
 	
@@ -134,7 +105,7 @@ Hello
 	<% "http://maps.google.com?q=#{@company.latitude}%2C#{@company.longitude}" %> 
 	<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@company.latitude}%2C#{@company.longitude}" %>
 <br /><br />
-<div data-role="collapsible" data-collapsed="true" data-content-theme="b" data-theme="d"> 
+<div data-role="collapsible" data-collapsed="true" data-content-theme="d" data-theme="d"> 
 <h3>Nearby Galleries</h3>
 <% for company in @company.nearbys(10, :units => :km) %>
 <li><%= link_to company.name, company %> at <%=  company.address %> (<%= company.distance.round(2) %> km)
@@ -144,7 +115,7 @@ Hello
 <% end %>
 
 </div><!-- /collapsible -->
-<div data-role="collapsible" data-collapsed="true" data-content-theme="b" data-theme="d"> 
+<div data-role="collapsible" data-collapsed="true" data-content-theme="d" data-theme="d"> 
 <h3>Distance From Me</h3>
 <li><%= Geocoder::Calculations.distance_between([@long,@lat], [@company.longitude,@company.latitude]) %></li>
 <li><%= @long %><%= @lat %></p>

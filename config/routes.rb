@@ -1,7 +1,15 @@
 Artme::Application.routes.draw do
+  resources :events do
+    get 'list', :on => :collection
+  end
+  match 'events/list' => 'events#list'
+  match 'exhibitions' => 'events#list'
+  match 'openings'=> 'events#index'
+  match 'galleries' => 'companies#index'
   resources :companies
   resources :events
   root :to => 'companies#index'
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
