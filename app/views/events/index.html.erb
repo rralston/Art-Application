@@ -11,8 +11,8 @@
 	</span></li>
 <% for event in events %>
 	<li><a href="events/<%= event.id %>" rel="external">
-		<h3><%= event.company.name %> </h3>
-		<p><%= event.name %> by <%= event.artist %></p>
+		<h4><%= event.artist %></h4>
+		<p><%= event.name %> @ <%= event.company.name %></p>
 	
 		<span class="ui-li-count"><strong><%= event.starttime.to_time.to_s(:time) %> </strong></span>
 	</a>	

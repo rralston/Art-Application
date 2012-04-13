@@ -1,0 +1,42 @@
+<h1><%= @event.name %></h1>
+<%= link_to '', events_path, "data-iconpos" => "notext", "data-icon" => "arrow-l", :rel => "external" %></div>
+<div class="ui-body ui-body-e">
+<p id="notice"><%= notice %></p>
+<% if @event.photos.exists? then %>
+<% for photo in @event.photos.limit(1)%>
+<div class="image">
+<h2><span><%= @event.name %><span class='spacer'></span></span></h2>
+<%= image_tag photo.photo.url(:large) %>
+</div>
+<% end %>
+<% else %>
+<p> There are no photo's attached</p>
+<% end %>
+<p>
+  <b><%= @event.name %> by <%= @event.artist %></b>
+  </p>
+
+<p>
+  <%= @event.description %>
+</p>
+<p>
+<ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="b" data-count-theme="e">
+<li> Preview at <%= @event.starttime.strftime("#{@event.starttime.strftime('%I:%M %p')}") %> on <%= @event.startdate.strftime("%B #{@event.startdate.day.ordinalize}, %Y") %></li>
+<li>Ends: <%= @event.finishdate.strftime("%B #{@event.finishdate.day.ordinalize}, %Y") %></li>
+</p></ul><br />
+<%= link_to("More on #{@event.company.name}", {:controller => 'companies', :action => 'show', :id => @event.company_id}, :class => 'action show', :'data-role' => "button", :rel => "external") %></p>
+
+	<div class="ui-body ui-body-a">
+<h1>Exhibition Preview</h1>
+<p>Please click on an image to enter the Gallery</p>
+
+<ul id="Gallery">
+<% for photo in @event.photos %>
+<li id="Gallery"><%= link_to image_tag(photo.photo.url(:small), :alt => photo.image_description), photo.photo.url(:medium), :alt => photo.image_description, :rel => "external" %></li>
+<% end %><br />
+</ul>
+</div>
+<br /><br />
+<%= link_to 'Edit', edit_event_path(@event), :rel => "external" %> |
+<%= link_to("Back to #{@event.company.name}", :controller => 'companies', :action => 'show', :id => @event.company_id, :rel => "external") %> | <%= link_to 'Back', events_path, :rel => "external" %>
+</div>

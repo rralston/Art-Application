@@ -1,25 +1,95 @@
 
-<h1>Galleries Near Me <%= @city %></h1>
-<%= link_to '', new_company_path, "data-icon" => "plus", "data-iconpos" => "notext" , "class" => "ui-btn-left", "data-theme" => "a" %>
-<%= link_to '', '#', "data-icon" => "custom", "data-iconpos" => "notext" , "class" => "ui-btn-right", "id" => "find" %>
+<div class="container-fluid">
+  <div class="row-fluid">
+    
 
-
-</div>
-
-<div data-role="content"><div class="content-primary">	
- <ul data-role="listview" data-count-theme="b">
-<% @companies.each do |company| %>
-		<li>
-		<a href="companies/<%= company.id %>">
-		<img src="<%= company.image(:small) %>" height="115" />
-	<h3><%= company.name %> </h3>
-	<p><%= company.description %></p>
-<span class="ui-li-count">Km	</span>
-	</a>
-		</li>
+	  <div class="span10">
+	      <!--Body content-->
+		 <table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th>Preview</th>
+		      <th>Name</th>
+		      <th>Description</th>
+		<th>Distance</th>
+			<th>Links</th>
+		      <th>Actions</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		<% @companies.each do |company| %>
+		 <tr>
+	        <td><img src="<%= company.image(:small) %>" height="115" /></td>
+			<td><h3><%= company.name %> </h3></td>
+			<td><%= truncate company.description, :length => 180 %></td>
+				<td id=<%= company.id.to_s + '_distance'%>></td>
+			<td><a href="companies/<%= company.id %>" class="btn btn-mini">View</a></td>
+				<td><%= link_to 'Edit', edit_company_path(company), :class => 'btn btn-mini' %>
+		          <%= link_to 'Destroy', company_path(company), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+			 </td>
+		      </tr>
+		    <% end %>
 	
-		<% end %>	</ul>
-		</div></div>
-		
-		
+			 </tbody>
+			</table>
+
+			<%= link_to 'New', new_company_path, :class => 'btn btn-primary' %>
+	    </div>
 	
+	
+		<div class="span2">
+	      <!--Sidebar content-->	<span id="status">Finding your location....</span>
+		
+	    </div>
+	
+	
+	  </div>
+	</div>
+	
+	<script>
+		function success(position) {
+			var s = document.querySelector('#status');
+
+			if(s.className == 'success') {
+				// not sure why we're hitting this twice in FF, I think it's to do with a cached result coming back
+				return;
+			}
+
+			//Ajax call to the companies distance method, the latitud and longitud are sent as parameters
+			var latlong = {
+				latitude : position.coords.latitude,
+				longitude : position.coords.longitude
+			};
+			//var latlong = {latitude: position.coords.latitude , longitude: position.coords.longitude};
+			$.post("companies/distance", latlong, function(data) {
+				// Update the html with the data returned by the controller
+				for(item in data) {
+					$("#" + data[item].company_id + "_distance").html(data[item].distance);
+				}
+			});
+			s.innerHTML = "found you! " + position.coords.accuracy + " " + position.coords.latitude + " " + position.coords.longitude + " ";
+			s.className = 'success';
+		}
+
+	
+
+		function error(msg) {
+			var s = document.querySelector('#status');
+			s.innerHTML = typeof msg == 'string' ? msg : "failed";
+			s.className = 'fail';
+
+			// console.log(arguments);
+		}
+
+
+		$(document).ready(function() {
+
+			if(navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(success, error);
+			} else {
+				error('not supported');
+			}
+
+		});
+
+	</script>

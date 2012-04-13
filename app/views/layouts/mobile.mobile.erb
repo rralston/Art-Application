@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Art Near Me</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style"content="black" />
+<link rel="apple-touch-startup-image" href="http://iris-exchequer.com/henruzzy/iPhonePortrait2.png" />
+<link rel="apple-touch-startup-image" href="http://iris-exchequer.com/henruzzy/iPadPortrait.png" />
+
+<link rel="apple-touch-icon" href="http://iris-exchequer.com/henruzzy/ArtNearMeIcon.png" />
+<link rel="stylesheet" href="http://iris-exchequer.com/henruzzy/jQueryMob.css" />
+<%= stylesheet_link_tag    "photoswipe" %>
+<%= stylesheet_link_tag  "mobile" %>
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "klass.min" %>
+<%= javascript_include_tag "code.photoswipe.jquery-3.0.4" %>
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+<%= javascript_include_tag('orientation') %>
+<script type="text/javascript">
+
+	(function(window, PhotoSwipe){
+	
+		document.addEventListener('DOMContentLoaded', function(){
+		
+			var
+				options = {},
+				instance = PhotoSwipe.attach( window.document.querySelectorAll('#Gallery a'), options );
+		
+		}, false);
+		
+		
+	}(window, window.Code.PhotoSwipe));
+	
+</script>
+<script type="text/javascript">
+$(function() {
+
+    $("h2")
+        .wrapInner("<span>")
+
+    $("h2 br")
+        .before("<span class='spacer'>")
+        .after("<span class='spacer'>");
+
+});
+</script>
+
+
+
+<%= yield :head %> 
+</head>
+<body>
+	
+  <div data-role="page">
+<div data-role="header" data-theme="b" >
+<%= yield %>
+
+
+
+
+<div data-role="footer" class="nav-glyphish-example" data-theme="b">
+	<div data-role="navbar" class="nav-glyphish-example">
+	<ul>	
+	
+			
+				<li><%= link_to 'Openings', events_path, "data-icon" => "custom", "id" => "opening", :rel => "external" %>
+				</li>
+				<li><%= link_to 'Galleries', companies_path, "data-icon" => "custom", "id" => "gallery", :rel => "external" %>
+				</li>
+				<li><%= link_to 'Exhibitions', exhibitions_path, "data-icon" => "custom", "id" => "exhibitions", :rel => "external" %>
+				</li>
+			</ul>
+		</div>
+</div>
+</body>
+<%= yield :scripts %>
+</html>
+

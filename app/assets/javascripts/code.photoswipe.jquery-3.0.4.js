@@ -5309,7 +5309,7 @@
 				
 				
 				// ZoomPanRotate
-				allowUserZoom: true, 
+				allowUserZoom: false, 
 				allowRotationOnUserZoom: false,
 				maxUserZoom: 5.0,
 				minUserZoom: 0.5,

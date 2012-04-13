@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  
+  attr_accessor :distance
   attr_accessor :photo_file_name
   attr_accessible :name, :description, :photos_attributes, :address, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :latitude, :website, :phone, :longitude, :visible, :email, :gmaps
   has_many :events
@@ -14,7 +14,12 @@ class Company < ActiveRecord::Base
   # accepts_nested_attributes_for :photos, :allow_destroy => true
         
       
-      
+ # before_filter :check_cookies  
+  
+   # def check_cookies
+   #      render :template => 'error_pages/no_cookies', :layout => false
+   #  end
+     
   geocoded_by :address
   after_validation :geocode, :if => :address_changed?
   acts_as_gmappable :auto_geocode=>true

@@ -1,0 +1,131 @@
+http://tscolari.github.com/mobylette/mobylette_images/mobylette.jpg
+
+  Mobylette 1.6+ only supports Ruby 1.9.2+
+  For Ruby 1.8.7 support, please use version > 1.6
+
+= Mobylette http://travis-ci.org/tscolari/mobylette.png
+
+This gem works by adding the 'mobile' format to your rails application. Whenever a request come from a mobile device, if you have your controller mobile enabled, it shall render the view.mobile.erb instead of the view.html.erb (or haml, or whatever).
+
+== How does it work?
+
+By adding "respond_to_mobile_requests" in your application_controller (or any other controller), your controllers (or that controller) will understand mobile requests as a new mime type alias "mobile". This will make the controller to search for the .mobile.erb file instead of the .html.erb. Also you will be able to do:
+
+    respond_to do |format|
+      format.html   { ... }
+      format.mobile { ... }
+    end
+
+== Instalation
+
+Add the gem to your gemfile:
+
+    gem 'mobylette'
+
+And add to your ApplicationController.rb (for enabling it to all your controllers) or to the controllers you want this functionality on:
+
+    respond_to_mobile_requests
+
+After that, you may start adding your .mobile. views.
+
+== Helpers
+
+* ==== is_mobile_request?
+
+  This helper returns true if the request comes from a mobile device, false if it does not.
+
+* ==== is_mobile_view?
+
+  Returns if the current format is :mobile or not.
+
+There is a difference between is_mobile_view? and is_mobile_request?. You may have a user requesting from a mobile device (is_mobile_request? == true) and at the same time, you may use the sesssion override to render de default format aways (is_mobile_view? == false). There are a lot of other combinations where these 2 functions will return different results.
+  * is_mobile_request?  -> Exclusively checks for the device from where the request were made
+  * is_mobile_view?     -> Exclusively checks for the view format been rendered
+
+* ==== mobylette_stylesheet_link_tag(*sources)
+
+  This works like the stylesheet_link_tag helper, but when the request comes from a mobile device, it adds "_mobile" to the stylesheets before calling stylesheet_link_tag
+
+* ==== mobylette_javascript_include_tag(*soruces)
+
+  Same as mobylette_stylesheet_link_tag, but for javascript files and javascript_include_tag
+
+== Fall Backs
+
+By default, when the mobile format is not found, mobylette will fall back to the request original format. For example, if a cell phone makes a request by html, and there is no mobile view, it will render the html. You may force it always to fall back to a especific format, by passing the :fall_back parameter to the respond_to_mobile_requests method:
+
+    respond_to_mobile_requests :fall_back => :html
+
+This would force all views (mobile) to fall back to the html views. You may also disable this behavior, and no fall back will ever occur:
+
+    respond_to_mobile_requests :fall_back => false
+
+
+== XHR Requests
+
+By default the mobile device verification will skip XHR requests, and these will be served as if mobylette wasn't there. You can override this behavior by passing the :skip_xhr_requests => false to the respond_to_mobile_requests call.
+
+    respond_to_mobile_requests :skip_xhr_requests => false
+
+You may need to use this if you are using JQuery mobile or something similar in your application.
+
+== Skiping mobile filter
+
+In the case you need to skip a mobile_request for been treated as mobile, you can pass the `skip_mobile=true` param to the url/request.
+
+For example, you are using jquery_mobile and by that `:skip_xhr_requests => false`, but there is a special case where you need to process an Ajax, then you can use this param.
+
+== Forcing/Ignoring Mobile Requests
+
+You may force your user to aways render the mobile format, or to aways render the default request format (when the request comes from a mobile device). You can use the session var :mobylette_override for doing it:
+
+    session[:mobylette_override] = :ignore_mobile
+
+This will skip the code that would force the mobile format. By doing this, your user will aways render the 'original' version of your app.
+
+    session[:mobylette_override] = :force_mobile
+
+This will force the mobile format rendering, no matter from where the user is requesting it (unless it's a xhr request).
+
+    session[:mobylette_override] = nil
+
+This will disable any override (default).
+
+== Testing
+
+http://tscolari.github.com/mobylette/mobylette_images/helmet.jpg
+
+Don't drive your mobylette without your Helmet! It's safer to do tests!
+
+For testing, include the Mobylette::Helmet module to your test/test_helpers.rb:
+
+    require 'mobylette/helmet'
+    include Mobylette::Helmet
+
+For RSpec: add to your spec/spec_helpers.rb or create a spec/support/mobylette.rb with the following:
+
+    require 'mobylette/helmet' 
+    RSpec.configure do |config|
+      config.include Mobylette::Helmet, :type => :controller
+    end
+
+This will add 2 methods to your test scope:
+
+    force_mobile_request_agent
+
+this one will force a mobile user_agent, allowing you to test mobile requests.
+
+    reset_test_request_agent
+
+and this one will reset your user_agent to the test default "Rails Testing". You don't need to call this everytime, all your requests by default are "Rails Testing" in your test env.
+
+Friendly note: on your tests, call these functions BEFORE you make the request, otherwise they are useless =p
+
+== Contributions and Credits
+
+This gem is based on the mobile_fu plugin (https://github.com/brendanlim/mobile-fu).
+
+Also, these pages were very usefull when creating the gem:
+* http://stackoverflow.com/questions/5126085/ruby-on-rails-mobile-application
+* http://www.arctickiwi.com/blog/mobile-enable-your-ruby-on-rails-site-for-small-screens
+* http://metautonomo.us/2011/01/05/mobile-devices-and-rails-maintaining-your-sanity/
