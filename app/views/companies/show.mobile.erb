@@ -13,7 +13,41 @@
 <% end %>
 <p>
   <%= @company.description %>
+
 </p>
+<p>
+<button onclick="getLocation()">Get Location</button>
+	<p id="rupe">Click the button to get your coordinates:</p>
+	<p id="demo">Click the button to get your coordinates:</p>
+	<p id="demo2">Click the button to get your coordinates:</p>
+
+
+
+
+	<script>
+	var a=document.getElementById("rupe");
+	var x=document.getElementById("demo");
+	var y=document.getElementById("demo2");
+	function getLocation()
+	  {
+	  if (navigator.geolocation)
+	    {
+	    navigator.geolocation.getCurrentPosition(showPosition);
+	    }
+	  else{x.innerHTML="Geolocation is not supported by this browser.";}
+	  }
+	function showPosition(position)
+	  {
+	  a.innerHTML=position.coords.latitude + " " + position.coords.longitude;
+	  x.innerHTML=position.coords.latitude;  
+	  y.innerHTML=position.coords.longitude;    
+	  }
+	</script>
+	
+	
+	
+</p>
+
 <h3>Current Exhibition</h3>
 <% if @company.events.exists? then %>
 <% @company.events.last(1).each do |event| %>

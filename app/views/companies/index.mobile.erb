@@ -12,6 +12,7 @@
 			latitude : position.coords.latitude,
 			longitude : position.coords.longitude
 		};
+		
 		//var latlong = {latitude: position.coords.latitude , longitude: position.coords.longitude};
 		$.post("companies/distance", latlong, function(data) {
 			// Update the html with the data returned by the controller
@@ -46,7 +47,7 @@
 
 
 
-<h1>Art Near Meow! <%= @city %></h1>
+<h1>Art Near Me! <%= @city %></h1>
 <%= link_to '', new_company_path, "data-icon" => "plus", "data-iconpos" => "notext" , "class" => "ui-btn-left", "data-theme" => "a" %>
 <%= link_to '', '#', "data-icon" => "custom", "data-iconpos" => "notext" , "class" => "ui-btn-right", "id" => "find" %>
 
@@ -59,9 +60,9 @@
 		<li>
 		<a href="companies/<%= company.id %>" rel="external">
 		<img src="<%= company.image(:small) %>" height="115" />
-	<h3><%= company.name %> hi<td id=<%= company.id.to_s + '_distance'%>></td></h3>
-	<p><%= company.description %></p>
-<span id="#{<%= company.id.to_s + '_distance'%>}" class="ui-li-count">></span>
+	<h3><%= company.name %></h3>
+	<p id="long"><%= company.description %></p>
+<span id="<%= company.id.to_s + '_distance'%>" class="ui-li-count">Me</span>
 	</a>
 		</li>
 	

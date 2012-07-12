@@ -1,23 +1,52 @@
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    
+
+	  <div class="span10">
+		
+
 <h1>Exhibition Openings</h1>
 <%= link_to '', new_event_path, "data-icon" => "plus", "data-iconpos" => "notext", "class" => "ui-btn-right" %>
-</div>
-<div data-role="content"><div class="content-primary">
-	<% @events_day.sort.each do |day, events| %>
 
-	<ul data-role="listview" data-theme="d" data-divider-theme="d">
-	<li data-role="list-divider"><%= day.strftime('%A %d %B') %><span class="ui-li-count">
-	<%= events.count %>
+<!--Body content-->
+ <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+	</tr>
+</thead>
+<tbody>
+
+
+
 	
-	</span></li>
+	
+       
+
+	<% @events_day.sort.each do |day, events| %>
+	<tr>
 <% for event in events %>
-	<li><a href="events/<%= event.id %>" rel="external">
-		<h4><%= event.artist %></h4>
-		<p><%= event.name %> @ <%= event.company.name %></p>
+<td><%= day.strftime('%A %d %B') %></td>
+	<td><a href="events/<%= event.id %>" rel="external" class="btn btn-mini">View</a></td>
+		<td><%= event.artist %></td>
+		<td><%= event.name %> @ <%= event.company.name %></td>
 	
-		<span class="ui-li-count"><strong><%= event.starttime.to_time.to_s(:time) %> </strong></span>
-	</a>	
-		</li>
-		<% end %><p>
-	</ul>
-	<% end %>
-	</div></div>
+		<td><%= event.starttime.to_time.to_s(:time) %> </td>
+		
+	</tr>
+	<% end %><% end %>
+      
+
+	 </tbody>
+	
+	</table>
+	
+	</div>
+
+
+
+
+
+  </div>
+</div>
