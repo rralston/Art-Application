@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   layout "mobile"
   
   def index
-    @events = Event.where('startdate >= ?', Date.today)
+    @events = Event.where('startdate >= ?', Date.today).order(:starttime)
     @events_day = @events.group_by { |s| s.startdate.beginning_of_day }
     
     respond_to do |format|
