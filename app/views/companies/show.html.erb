@@ -1,11 +1,12 @@
- <h1><%= @company.name %></h1>
+<div id="well">
+	<h1><%= @company.name %></h1>
 <p id="notice"><%= notice %></p>
 <br />
 <p>
 	<% if @company.image.exists? then %>
 	<div class="image">
 	<h2><span><%= @company.name %><span class='spacer'></span></span></h2>
-	<%= image_tag @company.image.url(:large) %>
+	<%= image_tag @company.image.url(:large), {:class => "img-polaroid"} %>
 	</div>
 	<% else %>
 	<p> There are no photo's attached</p>
@@ -40,33 +41,31 @@
 
 
 <br><br>
-<ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="b" data-count-theme="e">
-<li data-role="list-divider">Previous Exhibitions</li>
+<h3>Previous Exhibitions</h3>
+<table class="table table-bordered">
+
 	<% if @company.events.exists? then %>
 	<% @company.events.each do |event| %>
-<li><h3><%= link_to "#{event.name}", {:controller => "events", :action => "show", :id => event.id}, :rel => "external" %></h3>
-	<p>By <%= event.artist %></p></li>
-	
+		  <thead>
+		      <tr>
+		        <th><%= link_to "#{event.name}", {:controller => "events", :action => "show", :id => event.id}, :rel => "external" %></th>
+						<th>By <%= event.artist %></th>
+					</tr>
+				</thead>	
 <% end %>
 <% else %>
 <li>
  There are no previous events attached</li>
 <% end %>
-</ul>
+</table>
 <p>
-<ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="b" data-count-theme="e">
-<li data-role="list-divider">Contact <%= @company.name %></li>
-<li><%= link_to "Website", @company.website %>
-<span class="ui-li-count">Go</span></li>
-
-<li><%= mail_to(@company.email, "Email", :subject => @company.name ) %>
-<span class="ui-li-count">Open</span></li>	
-
-<li> <%= phone_number_link ("#{@company.phone}") %>
-	<span class="ui-li-count">Call</span></li>
-<li> <%= link_to @company.address,  "http://maps.google.com?q=#{@company.latitude},+#{@company.longitude}+(#{@company.name})&iwloc=A&hl=en" %>
-	<span class="ui-li-count">Map</span></li>
-</ul>
+<address>
+<strong>Contact <%= @company.name %></strong><br>
+<%= link_to "Website", @company.website %><br>
+<%= mail_to(@company.email, "Email", :subject => @company.name ) %><br>
+<%= phone_number_link ("#{@company.phone}") %><br>
+<%= link_to @company.address,  "http://maps.google.com?q=#{@company.latitude},+#{@company.longitude}+(#{@company.name})&iwloc=A&hl=en" %><br>
+</address>
 
 	<h3>Map:</h3>
 	<% "http://maps.google.com?q=#{@company.latitude}%2C#{@company.longitude}" %> 
@@ -105,4 +104,4 @@
   <%= link_to 'Edit', edit_company_path(@company), :class => 'btn' %>
   <%= link_to 'Delete', company_path(@company), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
 </div>
-
+</div>

@@ -1,0 +1,7 @@
+To Do
+
+User Profile
+Facebook Login
+Better Geolocation
+Focus on Either Mobile or Desktop
+Messaging / Notifications

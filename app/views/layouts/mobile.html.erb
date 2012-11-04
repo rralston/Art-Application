@@ -60,17 +60,20 @@ $(function() {
 
 			<li><%= link_to 'New Gallery', new_company_path %></li>
 			<li><%= link_to 'GeoLocate', '#' %></li>
+			<li><%= link_to 'My Profile', '#' %></li>
 		</ul>
 
 			</div>
 		</div>
 	</div>
+<div class="span11 offset1">
 <%= yield %>
-
+</div>
 
 
 	
 </body>
 <%= yield :scripts %>
+
 </html>
 
