@@ -1,47 +1,45 @@
-
+<style>
+.container-fluid {
+	padding-top:80px;
+}
+</style>
+<div class="container">
 <div class="container-fluid">
   <div class="row-fluid">
     
 
-	  <div class="span10">
+	  <div class="span12">
 	      <!--Body content-->
 		 <table class="table table-striped">
 		  <thead>
 		    <tr>
-		      <th>Preview</th>
-		      <th>Name</th>
-		      <th>Description</th>
-		<th>Distance</th>
-			<th>Links</th>
-		      <th>Actions</th>
+					<th>Preview</th>
+					<th>Gallery</th>
+					<th>Description</th>
+					<th>Distance</th>
+					<th>Links</th>
+					<th>Actions</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		<% @companies.each do |company| %>
 		 <tr>
-	        <td><img src="<%= company.image(:small) %>" height="115" /></td>
+	    <td><img src="<%= company.image(:small) %>" height="115" class="img-polaroid" /></td>
 			<td><h3><%= company.name %> </h3></td>
 			<td><%= truncate company.description, :length => 180 %></td>
-				<td id=<%= company.id.to_s + '_distance'%>></td>
+			<td id=<%= company.id.to_s + '_distance'%>></td>
 			<td><a href="companies/<%= company.id %>" class="btn btn-mini">View</a></td>
-				<td><%= link_to 'Edit', edit_company_path(company), :class => 'btn btn-mini' %>
-		          <%= link_to 'Destroy', company_path(company), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+				<td>
+						<%= link_to 'Edit', edit_company_path(company), :class => 'btn btn-mini' %>
+		        <%= link_to 'Destroy', company_path(company), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 			 </td>
-		      </tr>
-		    <% end %>
+		  </tr>
+		<% end %>
 	
 			 </tbody>
 			</table>
 
-			<%= link_to 'New', new_company_path, :class => 'btn btn-primary' %>
-	    </div>
-	
-	
-		<div class="span2">
-	      <!--Sidebar content-->	<span id="status">Finding your location....</span>
-	    </div>
-	
-	
+	    </div>	
 	  </div>
 	</div>
 	
@@ -92,3 +90,4 @@
 		});
 
 	</script>
+</div>

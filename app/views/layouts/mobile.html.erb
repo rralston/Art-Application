@@ -2,78 +2,347 @@
 <html>
 <head>
   <title>Art Near Me</title>
-<%= stylesheet_link_tag    "bootstrap" %>
-<%= stylesheet_link_tag    "bootstrap-responsive" %>
+
 <%= stylesheet_link_tag    "photoswipe" %>
-<%= stylesheet_link_tag  "mobile" %>
-<%= javascript_include_tag "bootstrap" %>
+<%= stylesheet_link_tag  "desktop" %>
+<%= javascript_include_tag('orientation') %>
 <%= javascript_include_tag "application" %>
 <%= javascript_include_tag "klass.min" %>
 <%= javascript_include_tag "code.photoswipe.jquery-3.0.4" %>
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<%= javascript_include_tag('orientation') %>
-<script type="text/javascript">
+<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+<style>
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
 
-	(function(window, PhotoSwipe){
-	
-		document.addEventListener('DOMContentLoaded', function(){
-		
-			var
-				options = {},
-				instance = PhotoSwipe.attach( window.document.querySelectorAll('#Gallery a'), options );
-		
-		}, false);
-		
-		
-	}(window, window.Code.PhotoSwipe));
-	
-</script>
-<script type="text/javascript">
-$(function() {
-
-    $("h2")
-        .wrapInner("<span>")
-
-    $("h2 br")
-        .before("<span class='spacer'>")
-        .after("<span class='spacer'>");
-
-});
-</script>
+body {
+  padding-bottom: 40px;
+  color: #5a5a5a;
+}
 
 
 
-<%= yield :head %> 
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: relative;
+  z-index: 10;
+  margin-top: 20px;
+  margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+}
+
+/* Remove border and change up box shadow for more contrast */
+.navbar .navbar-inner {
+  border: 0;
+  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+     -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+          box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+
+/* Downsize the brand/project name a bit */
+.navbar .brand {
+  padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+}
+
+/* Navbar links: increase padding for taller navbar */
+.navbar .nav > li > a {
+  padding: 15px 20px;
+}
+
+/* Offset the responsive button for proper vertical alignment */
+.navbar .btn-navbar {
+  margin-top: 10px;
+}
+
+
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-bottom: 60px;
+}
+
+.carousel .container {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.carousel-control {
+  background-color: transparent;
+  border: 0;
+  font-size: 120px;
+  margin-top: 0;
+  text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
+
+.carousel .item {
+  height: 500px;
+}
+.carousel img {
+  min-width: 100%;
+  height: 500px;
+}
+
+.carousel-caption {
+  background-color: transparent;
+  position: static;
+  max-width: 550px;
+  padding: 0 20px;
+  margin-bottom: 100px;
+}
+.carousel-caption h1,
+.carousel-caption .lead {
+  margin: 0;
+  line-height: 1.25;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
+.carousel-caption .btn {
+  margin-top: 10px;
+}
+
+
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .span4 {
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .span4 p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+.featurette {
+  padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+  overflow: hidden; /* Vertically center images part 2: clear their floats. */
+}
+.featurette-image {
+  margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+}
+
+/* Give some space on the sides of the floated elements so text doesn't run right into it. */
+.featurette-image.pull-left {
+  margin-right: 40px;
+}
+.featurette-image.pull-right {
+  margin-left: 40px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-size: 50px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (max-width: 979px) {
+
+  .container.navbar-wrapper {
+    margin-bottom: 0;
+    width: auto;
+  }
+  .navbar-inner {
+    border-radius: 0;
+    margin: -20px 0;
+  }
+
+  .carousel .item {
+    height: 500px;
+  }
+  .carousel img {
+    width: auto;
+    height: 500px;
+  }
+
+  .featurette {
+    height: auto;
+    padding: 0;
+  }
+  .featurette-image.pull-left,
+  .featurette-image.pull-right {
+    display: block;
+    float: none;
+    max-width: 40%;
+    margin: 0 auto 20px;
+  }
+}
+
+
+@media (max-width: 767px) {
+
+  .navbar-inner {
+    margin: -20px;
+  }
+
+  .carousel {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  .carousel .container {
+
+  }
+  .carousel .item {
+    height: 300px;
+  }
+  .carousel img {
+    height: 300px;
+  }
+  .carousel-caption {
+    width: 65%;
+    padding: 0 70px;
+    margin-bottom: 40px;
+  }
+  .carousel-caption h1 {
+    font-size: 30px;
+  }
+  .carousel-caption .lead,
+  .carousel-caption .btn {
+    font-size: 18px;
+  }
+
+  .marketing .span4 + .span4 {
+    margin-top: 40px;
+  }
+
+  .featurette-heading {
+    font-size: 30px;
+  }
+  .featurette .lead {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+}
+#Gallery ul { list-style: none; padding: 0; margin: 0; }
+#Gallery:after { clear: both; content: "."; display: block; height: 0; visibility: hidden; }
+#Gallery li { list-style: none; float: left; width: 33.333333%; }
+#Gallery li a { display: block; margin: 5px; }
+#Gallery li img { margin-left:-25px; display: block; width: 100%; height: 100px; }
+img {
+  border: 2px solid #00516E;
+  width: 100%; 
+}
+.image {
+   position: relative;
+   width: 100%; /* for IE 6 */
+   margin-left: -2px;
+}
+h2 {
+   position: absolute;
+   top: 100px;
+   left: 0;
+   width: 100%;
+}
+h2 span {
+   color: white;
+   font: normal 24px/45px Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+   background: rgb(0, 0, 0); /* fallback color */
+   background: rgba(0, 0, 0, 0.7);
+   padding: 10px;
+}
+h2 span.spacer {
+   padding:0 5px;
+}
+h2 p {
+   color: white;
+   font-weight: 100;
+   font: normal 14px/45px 'Century Gothic', Sans-Serif;
+   letter-spacing: 2px;
+   background: rgb(0, 0, 0); /* fallback color */
+   background: rgba(0, 0, 0, 0.7);
+   margin-top: -44px;
+   margin-left: 10px;
+   margin-right: 10px;
+   padding-left: 15px;
+}
+.nav-glyphish-example .ui-btn .ui-btn-inner { padding-top: 40px !important; }
+.nav-glyphish-example .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
+#find .ui-icon { background:  url(find.png) 50% 50% no-repeat; background-size: 20px 20px; }
+#opening .ui-icon { background:  url(opening.png) 50% 50% no-repeat; background-size: 24px 22px; }
+#gallery .ui-icon { background:  url(gallery.png) 50% 50% no-repeat; background-size: 24px 22px; }
+#exhibitions .ui-icon { background:  url(exhibitions.png) 50% 50% no-repeat; background-size: 24px 22px; }
+</style>
 </head>
 <body>
-	
-	<div class="navbar">
-	  <div class="navbar-inner">
-	    <div class="container">
-			<%= link_to "ArtNearMe.com", companies_path, "class" => "brand" %> <%= @city %>
+	<!-- NAVBAR
+  ================================================== -->
+  <!-- Wrap the .navbar in .container to center it on the page and provide easy way to target it with .navbar-wrapper. -->
+  <div class="container navbar-wrapper">
 
-			<ul class="nav">
-			  <li><%= link_to 'Galleries', companies_path %></li>
-
-			<li><%= link_to 'Openings', events_path %></li>
-			<li><%= link_to 'Exhibitions', exhibitions_path %></li>
-
-			<li><%= link_to 'New Gallery', new_company_path %></li>
-			<li><%= link_to 'GeoLocate', '#' %></li>
-			<li><%= link_to 'My Profile', '#' %></li>
-		</ul>
-
-			</div>
-		</div>
-	</div>
-<div class="span11 offset1">
+    <div class="navbar navbar-inverse">
+      <div class="navbar-inner">
+        <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <%= link_to "ArtNearMe.com", companies_path, "class" => "brand" %>
+        <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+        <div class="nav-collapse collapse pull-right">
+          <ul class="nav">
+            <li class="active"><a href="http://www.artnearme.com/#">Home</a></li>
+            <li><%= link_to 'Galleries', companies_path %></li>
+            <li><%= link_to 'Openings', events_path %></li>
+						<li><%= link_to 'Exhibitions', exhibitions_path %></li>
+            <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> My Account<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Sign-up</a></li>
+                <li class="divider"></li>
+                <li class="nav-header">Messages</li>
+                <li><a href="#"><i class="icon-envelope icon-black"></i> Inbox</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!-- /.navbar-inner -->
+    </div><!-- /.navbar -->
+  </div><!-- /.container -->
 <%= yield %>
-</div>
 
+    <!-- FOOTER -->
+    <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+      <p>© 2012 Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+    </footer>
 
+  </div><!-- /.container -->
 	
 </body>
-<%= yield :scripts %>
 
 </html>
 

@@ -8,7 +8,8 @@ Artme::Application.routes.draw do
   match 'galleries' => 'companies#index'
   resources :companies
   resources :events
-  root :to => 'companies#index'
+  root :to => 'companies#home'
+  match 'companies/home' => 'companies#home'
   
 
   # The priority is based upon order of creation:

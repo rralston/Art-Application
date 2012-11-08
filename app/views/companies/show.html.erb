@@ -1,4 +1,10 @@
-<div id="well">
+<style>
+.container-fluid {
+	padding-top:80px;
+}
+</style>
+<div class="container">
+	<div id="well">
 	<h1><%= @company.name %></h1>
 <p id="notice"><%= notice %></p>
 <br />
@@ -103,5 +109,6 @@
   <%= link_to 'Back', companies_path, :class => 'btn'  %>
   <%= link_to 'Edit', edit_company_path(@company), :class => 'btn' %>
   <%= link_to 'Delete', company_path(@company), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>
 </div>
 </div>
