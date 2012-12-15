@@ -9,7 +9,7 @@
 <link rel="apple-touch-startup-image" href="http://iris-exchequer.com/henruzzy/iPadPortrait.png" />
 
 <link rel="apple-touch-icon" href="http://iris-exchequer.com/henruzzy/ArtNearMeIcon.png" />
-<link rel="stylesheet" href="http://iris-exchequer.com/henruzzy/jQueryMob.css" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.css" />
 <%= stylesheet_link_tag    "photoswipe" %>
 <%= stylesheet_link_tag  "mobile" %>
 <%= javascript_include_tag "klass.min" %>
@@ -18,7 +18,7 @@
 
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.js"></script>
 <%= javascript_include_tag('orientation') %>
 <script type="text/javascript">
 
@@ -57,6 +57,8 @@ $(function() {
 	
   <div data-role="page">
 <div data-role="header" data-theme="b" >
+	
+
 <%= yield %>
 
 

@@ -1,95 +1,29 @@
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    
+<h1 id="title">Art Near Me!</h1>
+<%= link_to '', new_company_path, "data-icon" => "plus", "data-iconpos" => "notext" , "class" => "ui-btn-left", "data-theme" => "a" %>
+<%= link_to '', '#', "data-icon" => "custom", "data-iconpos" => "notext" , "class" => "ui-btn-right", "id" => "find" %>
+<%= form_tag companies_path, :method => :get do %>
+<%= text_field_tag :search, params[:search] %>
+<%= submit_tag "Custom Search", :name => nil %>
+<% end %>
+</div>
 
-	  <div class="span10">
-	      <!--Body content-->
-		 <table class="table table-striped">
-		  <thead>
-		    <tr>
-		      <th>Preview</th>
-		      <th>Name</th>
-		      <th>Description</th>
-		<th>Distance</th>
-			<th>Links</th>
-		      <th>Actions</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		<% @companies.each do |company| %>
-		 <tr>
-	        <td><img src="<%= company.image(:small) %>" height="115" /></td>
-			<td><h3><%= company.name %> </h3></td>
-			<td><%= truncate company.description, :length => 180 %></td>
-				<td id=<%= company.id.to_s + '_distance'%>></td>
-			<td><a href="companies/<%= company.id %>" class="btn btn-mini">View</a></td>
-				<td><%= link_to 'Edit', edit_company_path(company), :class => 'btn btn-mini' %>
-		          <%= link_to 'Destroy', company_path(company), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-			 </td>
-		      </tr>
-		    <% end %>
 	
-			 </tbody>
-			</table>
-
-			<%= link_to 'New', new_company_path, :class => 'btn btn-primary' %>
-	    </div>
+<div data-role="content"><div class="content-primary">	
+ <ul data-role="listview" data-count-theme="b">
+<% @companies.each do |company| %>
+		<li <% if params[:search].present? %>data-icon="false"<% end %>>
+		<a href="companies/<%= company.id %>" rel="external">
+		<img src="<%= company.image(:small) %>" height="115" />
+	<h3><%= company.name %></h3>
+	<p style="white-space:normal;" id="small"><%=h truncate(company.description, :length => 120) %></p>
+<% if params[:search].present? %><span class="ui-li-count"> <%= company.distance.round(2) %> Km </span><% end %>
+	</a>
+		</li>
 	
-	
-		<div class="span2">
-	      <!--Sidebar content-->	<span id="status">Finding your location....</span>
+		<% end %>	</ul>
+		</div></div>
 		
-	    </div>
+		
 	
-	
-	  </div>
-	</div>
-	
-	<script>
-		function success(position) {
-			var s = document.querySelector('#status');
-
-			if(s.className == 'success') {
-				// not sure why we're hitting this twice in FF, I think it's to do with a cached result coming back
-				return;
-			}
-
-			//Ajax call to the companies distance method, the latitud and longitud are sent as parameters
-			var latlong = {
-				latitude : position.coords.latitude,
-				longitude : position.coords.longitude
-			};
-			//var latlong = {latitude: position.coords.latitude , longitude: position.coords.longitude};
-			$.post("companies/distance", latlong, function(data) {
-				// Update the html with the data returned by the controller
-				for(item in data) {
-					$("#" + data[item].company_id + "_distance").html(data[item].distance);
-				}
-			});
-			s.innerHTML = "found you! " + position.coords.accuracy + " " + position.coords.latitude + " " + position.coords.longitude + " ";
-			s.className = 'success';
-		}
-
-	
-
-		function error(msg) {
-			var s = document.querySelector('#status');
-			s.innerHTML = typeof msg == 'string' ? msg : "failed";
-			s.className = 'fail';
-
-			// console.log(arguments);
-		}
-
-
-		$(document).ready(function() {
-
-			if(navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(success, error);
-			} else {
-				error('not supported');
-			}
-
-		});
-
-	</script>
