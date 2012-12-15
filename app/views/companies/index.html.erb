@@ -18,7 +18,7 @@
 		<img src="<%= company.image(:small) %>" height="115" />
 	<h3><%= company.name %></h3>
 	<p style="white-space:normal;" id="small"><%=h truncate(company.description, :length => 120) %></p>
-<% if params[:search].present? %><span class="ui-li-count"> <%= company.distance.round(2) %> Km </span><% end %>
+<% if params[:search].present? %><span class="ui-li-count"> <%= company.distance.round(1) %>km </span><% end %>
 	</a>
 		</li>
 	
