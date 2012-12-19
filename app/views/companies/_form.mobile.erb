@@ -51,11 +51,16 @@
     <%= f.label :gmaps %><br />
     <%= f.check_box :gmaps %>
   </div>
- <div class="field">
+<div class="field">
+<% if @company.image.nil? %>
+<p><%= f.file_field :image %></p>
+<% else %> 
+<%= image_tag @company.image(:small), :width => "100" %>
+<p>Click Here to Destroy	<%= f.check_box :_destroy %> </p>
+			
+<% end %>
 
-	 <%= f.label :image %><br />
-    <%= f.file_field :image %>
-</div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
