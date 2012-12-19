@@ -1,7 +1,7 @@
  
 <h1><%= @company.name %></h1>
 <%= link_to '', companies_path, "data-iconpos" => "notext", "data-icon" => "arrow-l", :rel => "external" %></div>
-<div class="ui-body ui-body-e">
+<div class="ui-body ui-body-d">
 <p id="notice"><%= notice %></p>
 <% if @company.image.exists? then %>
 <div class="image">
@@ -13,39 +13,39 @@
 <% end %>
 <p>
   <%= @company.description %>
-
 </p>
-
+<!-- Current Exhibitions -->
 <h3>Current Exhibition</h3>
 <% if @company.events.exists? then %>
 <% @company.events.last(1).each do |event| %>
+<%= image_tag(event.photos.first.photo.url(:medium)) %>
+<br>
 <%= link_to "#{event.name}", {:controller => "events", :action => "show", :id => event.id}, :rel => "external" %>
 By <b><%= event.artist %></b><br />
-<%= event.description %><br />
+<%= event.description %><br /><br />
 
-Finished On: <%= event.finishdate.strftime("%B #{event.finishdate.day.ordinalize}, %Y") %>
-
+<b> Ending On: <%= event.finishdate.strftime("%B #{event.finishdate.day.ordinalize}, %Y") %></b>
+<%= link_to("More on #{event.name}", {:controller => 'events', :action => 'show', :id => event.id}, :class => 'action show', :'data-role' => "button") %>
 <% end %>
 <% else %>
 <p> There are no current events attached</p>
 <% end %>
+<!-- End Current Exhibitions -->
 
-
-<br><br>
-<ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="b" data-count-theme="e">
-<li data-role="list-divider">Previous Exhibitions</li>
-	<% if @company.events.exists? then %>
-	<% @company.events.each do |event| %>
-<li><h3><%= link_to "#{event.name}", {:controller => "events", :action => "show", :id => event.id}, :rel => "external" %></h3>
-	<p>By <%= event.artist %></p></li>
-	
-<% end %>
-<% else %>
-<li>
- There are no previous events attached</li>
+<!-- Previous Exhibitions -->
+<% if @company.events.exists? then %>
+<div data-role="collapsible" data-collapsed="true" data-iconpos="right" data-content-theme="d" data-theme="a"> 
+<h3> View Previous Exhibitions </h3>
+<ul data-role="listview" data-inset="false" data-theme="c" data-divider-theme="a" data-count-theme="e">
+<% @company.events.each do |event| %>
+<li><h3><%= link_to "#{event.name}", {:controller => "events", :action => "show", :id => event.id}, :rel => "external" %> - <%= event.artist %></h3></li>
 <% end %>
 </ul>
-<p>
+</div>
+<% end %>
+<!-- /End Previous Exhibitions -->
+	
+<!-- Contact Gallery Information	 -->
 <ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="b" data-count-theme="e">
 <li data-role="list-divider">Contact <%= @company.name %></li>
 <li><%= link_to "Website", @company.website %>
@@ -59,29 +59,35 @@ Finished On: <%= event.finishdate.strftime("%B #{event.finishdate.day.ordinalize
 <li> <%= link_to @company.address,  "http://maps.google.com?q=#{@company.latitude},+#{@company.longitude}+(#{@company.name})&iwloc=A&hl=en" %>
 	<span class="ui-li-count">Map</span></li>
 </ul>
+<!-- /End Contact Gallery Information -->
 
-	<h3>Map:</h3>
-	<% "http://maps.google.com?q=#{@company.latitude}%2C#{@company.longitude}" %> 
-	<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@company.latitude}%2C#{@company.longitude}" %>
+<!-- Begin Map -->
+<h3>Map:</h3>
+<%= link_to("http://maps.google.com?q=#{@company.latitude},+#{@company.longitude}+(#{@company.name})&iwloc=A&hl=en") do %><% "http://maps.google.com?q=#{@company.latitude}%2C#{@company.longitude}" %> 
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@company.latitude}%2C#{@company.longitude}" %>
+<% end %><!-- End Map -->
+
 <br /><br />
+
+<!-- Begin Nearby Galleries -->
 <div data-role="collapsible" data-collapsed="true" data-content-theme="d" data-theme="d"> 
 <h3>Nearby <%= @city %> Galleries</h3>
+<ul data-role="listview" data-inset="false" data-theme="d">
 <% for company in @company.nearbys(10, :units => :km) %>
-<li><%= link_to company.name, company, :rel => "external" %> at <%=  company.address %> (<%= @company.distance_to(company).round(2) %> km)
-	</li>
-</p>
-
+<li><h3><%= link_to company.name, company, :rel => "external" %> (<%= @company.distance_to(company).round(2) %> km)</h3>
+<p><%=  company.address %></p>
+</li>
 <% end %>
-
-</div>
-<p>
-<%= link_to("New Event", {:controller => 'events', :action => 'new', :company_id => @company.id}, :rel => "external") %>
+</ul>
 </p>
-
-
-
-<br />
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
 </div>
+<!-- End Nearby Galleries -->
 
+<div class="ui-grid-a">
+	<div class="ui-block-c"><button type="button" data-theme="c"><%= link_to 'Back', companies_path %></button></div>
+	<div class="ui-block-c"><button type="button" data-theme="c"><%= link_to 'Edit', edit_company_path(@company) %></button></div>	   
+</div>
+<div class="ui-grid-solo">
+	<div class="ui-block-a"><button type="v" data-theme="c"><%= link_to("New Event", {:controller => 'events', :action => 'new', :company_id => @company.id}, :rel => "external") %></button></div>
+</div>
+</div>
