@@ -1,7 +1,4 @@
 class EventsController < ApplicationController
-  # GET /events
-  # GET /events.json
-  layout "mobile"
   
   def index
     @events = Event.where('startdate >= ?', Date.today).order(:starttime)

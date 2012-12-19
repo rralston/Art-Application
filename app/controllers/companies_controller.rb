@@ -1,8 +1,5 @@
 class CompaniesController < ApplicationController
-  # GET /companies
-  # GET /companies.json
-  layout "mobile"
-   
+ 
     def index
       if params[:search].present?
         @companies = Company.near(params[:search], 50, {:order => :distance, :units => :km})
