@@ -18,16 +18,8 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   # GET /companies/1.json
   def show
-    # returns Geocoder::Result object
     @company = Company.find(params[:id])
-    # @lat_lng = cookies[:lat_lng].to_s().tr("|", ",")
-    # @long = request.location.longitude
-    # @lat = request.location.latitude
-    # @ip = request.ip
-    # @city = request.location.city
-   # @current = Event.where(:company_id => [params[:id]], :limit => 1)
    @event = Event.where(:company_id => (params[:id]), :limit => 1)
-   @oevent = Event.where(:company_id => (params[:id]), :limit => 5)
     @json = Company.find(params[:id]).to_gmaps4rails
     respond_to do |format|
       format.html # show.html.erb

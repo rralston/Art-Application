@@ -28,6 +28,9 @@ class EventsController < ApplicationController
       format.json { render :json => @event }
     end
   end
+  def artists
+    @events = Event.find(:all, :order => "artist ASC")
+  end
   # GET /events/new
   # GET /events/new.json
   def new
