@@ -1,9 +1,11 @@
 Artme::Application.routes.draw do
   resources :events do
-    get 'list', :on => :collection
+    get 'list', 'artists', :on => :collection
   end
   match 'events/list' => 'events#list'
   match 'exhibitions' => 'events#list'
+  match 'artists' => 'events#artists'
+  match 'artists/list' => 'events#artists'
   match 'openings'=> 'events#index'
   match 'galleries' => 'companies#index'
   resources :companies
