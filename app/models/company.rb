@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  attr_accessor :distance
+  default_scope :order => ":distance DESC"
   attr_accessor :photo_file_name
   attr_accessible :name, :description, :photos_attributes, :address, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :latitude, :website, :phone, :longitude, :visible, :email, :gmaps
   has_many :events
