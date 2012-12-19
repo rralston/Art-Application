@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Art Near Me</title>
+<%= stylesheet_link_tag    "bootstrap" %>
+<%= stylesheet_link_tag    "bootstrap-responsive" %>
+<%= stylesheet_link_tag  "mobile" %>
+<%= javascript_include_tag "bootstrap" %>
+<%= javascript_include_tag "application" %>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<%= javascript_include_tag('orientation') %>
+
+<%= yield :head %> 
+</head>
+<body>
+	
+	<div class="navbar">
+	  <div class="navbar-inner">
+	    <div class="container">
+			<%= link_to "ArtNearMe.com", companies_path, "class" => "brand" %> <%= @city %>
+
+			<ul class="nav">
+			  <li><%= link_to 'Galleries', companies_path %></li>
+
+			<li><%= link_to 'Openings', events_path %></li>
+			<li><%= link_to 'Exhibitions', exhibitions_path %></li>
+
+			<li><%= link_to 'New Gallery', new_company_path %></li>
+			<li><%= link_to 'GeoLocate', '#' %></li>
+		</ul>
+
+			</div>
+		</div>
+	</div>
+<%= yield %>
+
+
+
+	
+</body>
+<%= yield :scripts %>
+</html>
+
