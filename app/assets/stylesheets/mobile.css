@@ -43,7 +43,23 @@ h2 p {
 }
 .nav-glyphish-example .ui-btn .ui-btn-inner { padding-top: 40px !important; }
 .nav-glyphish-example .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
-#find .ui-icon { background:  url(find.png) 50% 50% no-repeat; background-size: 20px 20px; }
+#find .ui-icon { background:  url(map.png) 50% 50% no-repeat; background-size: 20px 20px; }
 #opening .ui-icon { background:  url(opening.png) 50% 50% no-repeat; background-size: 24px 22px; }
 #gallery .ui-icon { background:  url(gallery.png) 50% 50% no-repeat; background-size: 24px 22px; }
 #exhibitions .ui-icon { background:  url(exhibitions.png) 50% 50% no-repeat; background-size: 24px 22px; }
+#user .ui-icon { background:  url(user.png) 50% 50% no-repeat; background-size: 24px 22px; }
+#star .ui-icon { background:  url(star.png) 50% 50% no-repeat; background-size: 24px 22px; }
+#artists .ui-icon { background:  url(artists.png) 50% 50% no-repeat; background-size: 24px 22px; }
+
+/*Homepage Header*/
+.ui-grid-a .ui-block-a {
+	width: 70%;
+}
+.ui-grid-a .ui-block-b {
+	width: 30%;
+}
+/*Header Width*/
+.ui-header .ui-title {
+    margin-right: 10%;
+    margin-left: 10%;
+}
