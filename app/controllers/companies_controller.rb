@@ -2,39 +2,18 @@ class CompaniesController < ApplicationController
   # GET /companies
   # GET /companies.json
   layout "mobile"
-  
-  def distance
-
-      #get all the companies from the database
-      companies = Company.all
-      return_data = Array.new
-
-      #for each company calculate the distance and set the result on an Array
-      companies.each do |company|
-        distance =   Geocoder::Calculations.distance_between([company.latitude,company.longitude],[params[:latitude].to_f,params[:longitude].to_f])
-        data = {:company_id => company.id, :distance => distance}
-        return_data.push data
-      end
-
-      #store the latitude and longitud into the session for future usage
-      session[:latitude] = params[:latitude]
-      session[:longitude] = params[:longitude]
-
-      #return the array with the result on a Json
-      render :json => return_data
-
-    end
-
    
     def index
-      @companies = Company.all
-    # @lat_lng = cookies[:lat_lng].split("|")
-    # @companies.each{|company|company.distance =   Geocoder::Calculations.distance_between([company.latitude,company.longitude], [@lat_lng[0].to_f,@lat_lng[1].to_f])}
+      if params[:search].present?
+        @companies = Company.near(params[:search], 50, {:order => :distance, :units => :km})
+      else
+        @companies = Company.all
+      end
       respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @companies }
+      format.html # show.html.erb
+      format.json { render :json => @company }
+      end
     end
-end
 
   # GET /companies/1
   # GET /companies/1.json
@@ -42,10 +21,10 @@ end
     # returns Geocoder::Result object
     @company = Company.find(params[:id])
     # @lat_lng = cookies[:lat_lng].to_s().tr("|", ",")
-    @long = request.location.longitude
-    @lat = request.location.latitude
-    @ip = request.ip
-    @city = request.location.city
+    # @long = request.location.longitude
+    # @lat = request.location.latitude
+    # @ip = request.ip
+    # @city = request.location.city
    # @current = Event.where(:company_id => [params[:id]], :limit => 1)
    @event = Event.where(:company_id => (params[:id]), :limit => 1)
    @oevent = Event.where(:company_id => (params[:id]), :limit => 5)
