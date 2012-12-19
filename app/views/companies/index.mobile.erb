@@ -2,7 +2,8 @@
 
 <h1 id="title">Art Near Me</h1>
 <%= link_to '', new_company_path, "data-icon" => "plus", "data-iconpos" => "notext" , "id" => "swipe", "class" => "ui-btn-left", "data-theme" => "a" %>
-<%= link_to '', '#', "data-icon" => "custom", "data-iconpos" => "notext" , "class" => "ui-btn-right", "id" => "find" %>
+<%= link_to '#', "data-icon" => "custom", "class" => "ui-btn-right", "id" => "find" do %>
+<% if params[:search].present? %>Found!<% else %>Find me<% end %><% end %>
 
 
 
