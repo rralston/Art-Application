@@ -11,7 +11,7 @@
 
 	
 <div data-role="content"><div class="content-primary">	
- <ul data-role="listview" data-count-theme="b">
+ <ul data-role="listview" data-count-theme="c">
 <% @companies.each do |company| %>
 		<li <% if params[:search].present? %>data-icon="false"<% end %>>
 		<a href="companies/<%= company.id %>" rel="external">

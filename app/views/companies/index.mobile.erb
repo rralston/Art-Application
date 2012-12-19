@@ -20,22 +20,20 @@
 
 	
 <div data-role="content"><div class="content-primary">	
- <ul data-role="listview" data-count-theme="b">
-<% @companies.each do |company| %>
-		<li>
-		<a href="companies/<%= company.id %>" rel="external">
-		<% if company.image.present? %>
-		<img src="<%= company.image(:small) %>" height="115" />
-		<% else %>
-		<img src="images/error.gif" height="115" />
+	<ul data-role="listview" data-count-theme="c">
+		<% @companies.each do |company| %>
+			<li <% if params[:search].present? %>data-icon="false"<% end %>>
+				<a href="companies/<%= company.id %>" rel="external">
+					<img src="<%= company.image(:small) %>" height="115" />
+					<h3 id="home"><%= company.name %></h3>
+					<p style="white-space:normal;" id="small"><%=h truncate(company.description, :length => 120) %></p>
+					<% if params[:search].present? %><span class="ui-li-count"> <%= company.distance.round(1) %>km </span><% end %>
+				</a>
+			</li>
 		<% end %>
-	<h3><%= company.name %></h3>
-	<p style="white-space:normal;" id="small"><%=h truncate(company.description, :length => 120) %></p>
-<% if params[:search].present? %><span class="ui-li-count"> <%= company.distance.round(1) %>km </span><% end %>
-	</a>
-		</li>
-	
-		<% end %>	</ul>
-		</div></div>
+	</ul>
+</div>
+</div>
+
 		
 		
