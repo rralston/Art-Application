@@ -25,7 +25,7 @@ $("#find").click(function(){
 	 };
 
 	 var displayResults = function (results, status) {            
-		$('input#search').val(results[3].formatted_address);  
+		$('input#search').val(results[0].formatted_address);  
 		var $loca = results[3].formatted_address;
 		// alert($loca);
 	    $("form:first").submit();
