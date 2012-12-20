@@ -63,6 +63,7 @@ h2 p {
     margin-right: 10%;
     margin-left: 10%;
 }
-/*Home Page Content*/
-
-
+/*Fonts*/
+@font-face { font-family: Multicolore; src: url('Multicolore.otf'); } 
+h1 { font-family: Multicolore, sans-serif; }
+h2 { font-family: Multicolore, sans-serif; }
