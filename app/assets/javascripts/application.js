@@ -12,4 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require code.photoswipe.jquery-3.0.4
+//= require search
+//= require orientation
 //= require_tree .
