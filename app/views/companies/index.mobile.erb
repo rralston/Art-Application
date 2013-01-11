@@ -18,9 +18,9 @@
 		</div>
 <% end %>
 	</div>
-
-	
-<div data-role="content"><div class="content-primary">	
+<div data-role="content">
+<% if params[:search].present? %>	
+<div class="content-primary">	
 	<ul data-role="listview" data-count-theme="c">
 		<% @companies.each do |company| %>
 			<li <% if params[:search].present? %>data-icon="false"<% end %>>
@@ -34,6 +34,11 @@
 		<% end %>
 	</ul>
 </div>
+<% else %>
+<%= image_tag "main-image.jpg" %>
+
+
+<% end %>
 </div>
 
 		

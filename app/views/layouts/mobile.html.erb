@@ -2,15 +2,23 @@
 <html>
 <head>
   <title>Art Near Me</title>
-<%= stylesheet_link_tag    "bootstrap" %>
-<%= stylesheet_link_tag    "bootstrap-responsive" %>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style"content="black" />
+<link rel="apple-touch-startup-image" href="http://iris-exchequer.com/henruzzy/iPhonePortrait2.png" />
+<link rel="apple-touch-startup-image" href="http://iris-exchequer.com/henruzzy/iPadPortrait.png" />
+
+<link rel="apple-touch-icon" href="http://iris-exchequer.com/henruzzy/ArtNearMeIcon.png" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.css" />
 <%= stylesheet_link_tag    "photoswipe" %>
 <%= stylesheet_link_tag  "mobile" %>
-<%= javascript_include_tag "bootstrap" %>
-<%= javascript_include_tag "application" %>
 <%= javascript_include_tag "klass.min" %>
 <%= javascript_include_tag "code.photoswipe.jquery-3.0.4" %>
+<%= javascript_include_tag "application" %>
+
 <meta name="apple-mobile-web-app-capable" content="yes" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.js"></script>
 <%= javascript_include_tag('orientation') %>
 <script type="text/javascript">
 
@@ -47,29 +55,31 @@ $(function() {
 </head>
 <body>
 	
-	<div class="navbar">
-	  <div class="navbar-inner">
-	    <div class="container">
-			<%= link_to "ArtNearMe.com", companies_path, "class" => "brand" %> <%= @city %>
+  <div data-role="page">
+<div data-role="header" data-theme="a" >
+	
 
-			<ul class="nav">
-			  <li><%= link_to 'Galleries', companies_path %></li>
-
-			<li><%= link_to 'Openings', events_path %></li>
-			<li><%= link_to 'Exhibitions', exhibitions_path %></li>
-
-			<li><%= link_to 'New Gallery', new_company_path %></li>
-			<li><%= link_to 'Find me!', '#' %></li>
-		</ul>
-
-			</div>
-		</div>
-	</div>
 <%= yield %>
 
 
 
+
+<div data-role="footer" class="nav-glyphish-example" data-theme="a" data-id="foo1" data-position="non-fixed">
+	<div data-role="navbar" class="nav-glyphish-example">
+	<ul>	
 	
+			
+				<li><%= link_to 'Openings', events_path, "data-icon" => "custom", "id" => "opening", :rel => "external" %>
+				</li>
+				<li><%= link_to 'Galleries', companies_path, "data-icon" => "custom", "id" => "star", :rel => "external" %>
+				</li>
+				<li><%= link_to 'Exhibitions', exhibitions_path, "data-icon" => "custom", "id" => "exhibitions", :rel => "external" %>
+				</li>
+				<li><%= link_to 'Artists', artists_path, "data-icon" => "custom", "id" => "artists", :rel => "external" %>
+				</li>
+			</ul>
+		</div>
+</div>
 </body>
 <%= yield :scripts %>
 </html>

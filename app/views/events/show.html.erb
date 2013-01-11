@@ -1,6 +1,6 @@
 <h1><%= @event.name %></h1>
 <%= link_to '', events_path, "data-iconpos" => "notext", "data-icon" => "arrow-l" %></div>
-<div class="ui-body ui-body-e">
+<div class="ui-body ui-body-d">
 <p id="notice"><%= notice %></p>
 <% if @event.photos.exists? then %>
 <% for photo in @event.photos.limit(1)%>
