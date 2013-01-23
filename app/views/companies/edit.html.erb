@@ -1,6 +1,8 @@
-<h1>Edit <%= @company.name %></h1>
-
-<%= render 'form' %>
-
+<div class="row">
+  <div class="span8 offset1">
+		<legend>Edit <%= @company.name %></legend>
+		<%= render 'form' %>
+	</div>
+</div>
 <%= link_to 'Show', @company %> |
 <%= link_to 'Back', companies_path %>

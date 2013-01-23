@@ -1,7 +1,6 @@
 
-	<legend><h1>Editing company</h1></legend>
+<h1>Edit <%= @company.name %></h1>
+<div class="ui-body ui-body-d">
+<%= render 'form' %>
+</div>
 
-		<%= render 'form' %>
-
-<%= link_to 'Show', @company %> |
-<%= link_to 'Back', companies_path %>
